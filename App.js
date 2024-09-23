@@ -1,5 +1,4 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, ScrollView } from "react-native";
+import { StyleSheet, Text, View, SafeAreaView, FlatList } from "react-native";
 
 const pessoas = [
   {
@@ -78,14 +77,20 @@ const pessoas = [
 
 export default function App() {
   return (
-    <ScrollView style={styles.container}>
-      {pessoas.map((pessoa) => (
-        <View style={styles.containerPessoa}>
-          <Text style={styles.textoPessoa}>{pessoa.nome}</Text>
-          <Text style={styles.textoPessoa}>{pessoa.sobrenome}</Text>
-        </View>
-      ))}
-    </ScrollView>
+    <SafeAreaView style={styles.container}>
+      <FlatList
+        data={pessoas}
+        showsVerticalScrollIndicator={false}
+        renderItem={({ item }) => {
+          return (
+            <View style={styles.containerPessoa}>
+              <Text style={styles.textoPessoa}>{item.nome}</Text>
+              <Text style={styles.textoPessoa}>{item.sobrenome}</Text>
+            </View>
+          );
+        }}
+      />
+    </SafeAreaView>
   );
 }
 
@@ -94,7 +99,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     paddingHorizontal: 16,
-    paddingTop: 16,
+    paddingTop: 30,
   },
   containerPessoa: {
     borderWidth: 1,
