@@ -1,4 +1,12 @@
-import { StyleSheet, Text, View, SafeAreaView, FlatList } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TextInput,
+  Button,
+  FlatList,
+} from "react-native";
+import React, { useState } from "react";
 
 const pessoas = [
   {
@@ -76,21 +84,45 @@ const pessoas = [
 ];
 
 export default function App() {
+  const [numero, setNumero] = useState(0);
+  const [valor1, setValor1] = useState();
+  const [valor2, setValor2] = useState();
+  const [resultado, setResultado] = useState();
+
+  function somar() {
+    setNumero(numero + 1);
+  }
+
+  function subtrair() {
+    setNumero(numero - 1);
+  }
+
+  function somarValores() {
+    setResultado(parseInt(valor1) + parseInt(valor2));
+  }
+
   return (
-    <SafeAreaView style={styles.container}>
-      <FlatList
-        data={pessoas}
-        showsVerticalScrollIndicator={false}
-        renderItem={({ item }) => {
-          return (
-            <View style={styles.containerPessoa}>
-              <Text style={styles.textoPessoa}>{item.nome}</Text>
-              <Text style={styles.textoPessoa}>{item.sobrenome}</Text>
-            </View>
-          );
-        }}
+    <View style={styles.container}>
+      <Text style={{ fontSize: 50 }}>{numero}</Text>
+      <Button onPress={() => somar()} title="Somar" />
+      <Button onPress={() => subtrair()} title="Subtrair" />
+
+      <TextInput
+        value={valor1}
+        onChangeText={setValor1}
+        style={{ width: "90%", borderWidth: 1, height: 60 }}
+        placeholder="Digite o valor 1"
       />
-    </SafeAreaView>
+      <TextInput
+        value={valor2}
+        onChangeText={setValor2}
+        style={{ width: "90%", borderWidth: 1, height: 60 }}
+        placeholder="Digite o valor 2"
+      />
+
+      <Button onPress={() => somarValores()} title="Somar valores" />
+      <Text style={{ fontSize: 50 }}>Resultado: {resultado}</Text>
+    </View>
   );
 }
 
@@ -98,8 +130,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    paddingHorizontal: 16,
-    paddingTop: 30,
+    justifyContent: "center",
+    alignItems: "center",
   },
   containerPessoa: {
     borderWidth: 1,
